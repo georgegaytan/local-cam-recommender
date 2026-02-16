@@ -5,6 +5,7 @@ A scaffolded system design learning project simulating an industrial edge softwa
 ## Goal
 
 To understand architecture concepts relevant to industrial edge software, specifically:
+
 - **Local-first backend service**: Functionality independent of cloud connectivity.
 - **FastAPI design**: Clear domain boundaries and typed APIs.
 - **SQLite embedded storage**: Simple, file-based persistence.
@@ -23,6 +24,7 @@ To understand architecture concepts relevant to industrial edge software, specif
 ## Tech Stack
 
 ### Backend
+
 - **Language**: Python 3.14
 - **Framework**: FastAPI
 - **Database**: SQLite (local file)
@@ -30,6 +32,7 @@ To understand architecture concepts relevant to industrial edge software, specif
 - **Validation**: Pydantic v2
 
 ### Frontend
+
 - **Framework**: React (Vite)
 - **Language**: TypeScript
 - **Styling**: Vanilla CSS (clean and minimal)
@@ -38,17 +41,21 @@ To understand architecture concepts relevant to industrial edge software, specif
 ## Architecture
 
 ### Integration Boundary
+
 The **Integration Boundary** is strictly enforced via the HTTP API. The "CAM Plugin" (simulated in `backend/plugin_simulator/`) communicates *only* via JSON/HTTP, never touching the database or internal logic directly.  This decouples external systems from the internal backend structure.
 
 ### ML Logic Isolation
+
 The logic for recommendations is isolated within `backend/app/services/recommendation_service.py`. The API treats this as a black box, allowing for future upgrades to complex ML models (TensorFlow/PyTorch) without breaking the API contract.
 
 ### Validation Replayability
+
 Every validation result includes a `validation_hash` computed from the input configuration. This ensures auditability and allows verification that a specific configuration produced a specific validation result at a point in time.
 
 ## Getting Started
 
 ### Prerequisites
+
 - Python 3.10+
 - Node.js 18+
 
@@ -65,6 +72,7 @@ venv\Scripts\activate
 pip install -r requirements.txt
 python -m uvicorn app.main:app --reload
 ```
+
 The API will be available at `http://localhost:8000`. Documentation at `http://localhost:8000/docs`.
 
 ### 2. Frontend Setup
@@ -74,12 +82,14 @@ cd frontend
 npm install
 npm run dev
 ```
+
 The UI will be available at `http://localhost:5173`.
 
 ### 3. Desktop Application (Electron)
 
 **Development Mode**:
 Run both the React frontend and Python backend (from source) in a single command:
+
 ```bash
 cd frontend
 npm run electron:dev
@@ -87,10 +97,12 @@ npm run electron:dev
 
 **Build Standalone Executable**:
 Package the application into a standalone Windows executable. This bundles the Python backend using PyInstaller, so the user doesn't need Python installed.
+
 ```bash
 cd frontend
 npm run electron:build
 ```
+
 The output executable will be located at:
 `frontend/release/win-unpacked/Local CAM Recommender.exe`
 
@@ -102,4 +114,5 @@ With the backend (or Electron app) running:
 cd backend
 python plugin_simulator/cam_plugin.py
 ```
+
 This script acts as an external agent, showing how a third-party tool would interact with the local service.

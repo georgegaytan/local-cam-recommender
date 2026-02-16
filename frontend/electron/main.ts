@@ -1,12 +1,22 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import { spawn, ChildProcess } from 'child_process';
-import os from 'os';
+import { fileURLToPath } from 'url';
+
+// ESM replacement for __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {
-    app.quit();
-}
+// We need to use dynamic import or just checking if we can
+// Since this is a scaffold, we can skip the detailed squirrel check or assume it's not needed for dev
+// But for correctness in ESM, if we want to keep it:
+// import squirrelStartup from 'electron-squirrel-startup';
+// if (squirrelStartup) app.quit();
+// However, the package is missing. I will comment it out to prevent runtime errors until installed.
+// if (require('electron-squirrel-startup')) {
+//     app.quit();
+// }
 
 let mainWindow: BrowserWindow | null = null;
 let backendProcess: ChildProcess | null = null;
@@ -38,6 +48,13 @@ function startBackend() {
         // We need to resolve the backend folder path relative to here
         // electron main is likely running from root or frontend.
         // CWD for electron in dev is usually the package.json folder (frontend).
+        // In ESM, __dirname points to dist-electron/ when compiled.
+        // We need to go up to frontend/ and then to backend/
+        // dist-electron/ -> frontend/ -> ../backend/ (sibling of frontend)
+
+        // __dirname is .../frontend/dist-electron
+        // we want .../backend/run.py
+
         const backendScript = path.join(__dirname, '../../backend/run.py');
         console.log(`Backend script: ${backendScript}`);
 
@@ -52,13 +69,15 @@ function startBackend() {
         });
     }
 
-    backendProcess.on('error', (err) => {
-        console.error('Failed to start backend:', err);
-    });
+    if (backendProcess) {
+        backendProcess.on('error', (err) => {
+            console.error('Failed to start backend:', err);
+        });
 
-    backendProcess.on('exit', (code, signal) => {
-        console.log(`Backend exited with code ${code} and signal ${signal}`);
-    });
+        backendProcess.on('exit', (code, signal) => {
+            console.log(`Backend exited with code ${code} and signal ${signal}`);
+        });
+    }
 }
 
 function stopBackend() {
@@ -86,8 +105,8 @@ function createWindow() {
         mainWindow.webContents.openDevTools();
     } else {
         // In prod, load index.html from dist
-        // __dirname in prod usually points to resources/app/dist/electron-main or similar
-        // We need to verify where vite builds to.
+        // __dirname in prod usually points to resources/app/dist-electron
+        // We need to go up to dist/index.html
         mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
     }
 }
@@ -113,3 +132,4 @@ app.on('activate', () => {
         createWindow();
     }
 });
+
