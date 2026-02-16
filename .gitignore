@@ -50,3 +50,8 @@ backend/local_cam.db
 backend/build/
 backend/dist/
 backend/local-cam-api.spec
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
