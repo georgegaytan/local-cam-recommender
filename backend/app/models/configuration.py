@@ -1,8 +1,9 @@
-from sqlalchemy import Column, String, Float, Integer, DateTime, ForeignKey, Boolean
-from sqlalchemy.orm import relationship
-from sqlalchemy.dialects.sqlite import JSON
-from datetime import datetime, timezone
 import uuid
+from datetime import datetime, timezone
+
+from sqlalchemy import Boolean, Column, DateTime, Float, ForeignKey, Integer, String
+from sqlalchemy.dialects.sqlite import JSON
+
 from app.core.database import Base
 
 

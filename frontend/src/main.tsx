@@ -4,7 +4,7 @@ import App from './App'
 // import './index.css' // We don't have global styles yet
 
 ReactDOM.createRoot(document.getElementById('app')!).render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 )
