@@ -1,7 +1,7 @@
-from pydantic import BaseModel, Field, ConfigDict
 from datetime import datetime
-from typing import Optional
-import uuid
+
+from pydantic import BaseModel, ConfigDict
+
 
 class ConfigurationBase(BaseModel):
     machine_id: str
@@ -10,11 +10,14 @@ class ConfigurationBase(BaseModel):
     feed_rate: float
     spindle_speed: int
 
+
 class ConfigurationCreate(ConfigurationBase):
     pass
 
+
 class ConfigurationUpdate(ConfigurationBase):
     pass
+
 
 class Configuration(ConfigurationBase):
     id: str

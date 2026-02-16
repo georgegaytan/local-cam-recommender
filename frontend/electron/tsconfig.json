@@ -1,14 +1,12 @@
 {
-    "compilerOptions": {
-        "target": "ESNext",
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
-        "outDir": "../dist-electron",
-        "rootDir": "./",
-        "strict": true,
-        "esModuleInterop": true
-    },
-    "include": [
-        "main.ts"
-    ]
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "../dist-electron",
+    "rootDir": "./",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["main.ts"]
 }

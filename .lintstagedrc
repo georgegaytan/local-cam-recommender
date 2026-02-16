@@ -1,0 +1,12 @@
+{
+  "backend/**/*.py": [
+    "python -m ruff check --fix",
+    "python -m ruff format"
+  ],
+  "frontend/**/*.{ts,tsx,js,jsx,json,css,md}": [
+    "npm run --prefix frontend format:staged --"
+  ],
+  "frontend/**/*.{ts,tsx}": [
+    "npm run --prefix frontend lint:staged -- --fix"
+  ]
+}
