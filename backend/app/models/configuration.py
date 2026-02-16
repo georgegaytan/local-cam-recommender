@@ -11,7 +11,6 @@ def generate_uuid():
 
 
 class Configuration(Base):
-
     __tablename__ = "configurations"
 
     id = Column(String, primary_key=True, default=generate_uuid)
