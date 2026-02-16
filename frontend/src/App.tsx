@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ConfigPage } from './pages/ConfigPage';
 import { RecommendationPage } from './pages/RecommendationPage';
 import { ValidationPage } from './pages/ValidationPage';

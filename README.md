@@ -18,6 +18,7 @@ To understand architecture concepts relevant to industrial edge software, specif
 - **Recommendation Engine**: Retrieval-based system to suggest optimal configurations based on past successful jobs (similar material and tool diameter).
 - **Plugin Simulator**: A Python script simulating a legacy CAM plugin (C++/C#) communicating with the modern backend via HTTP.
 - **React Frontend**: A clean UI to interact with the system, visualize configurations, and test validation logic.
+- **Electron App**: A standalone desktop application that automatically manages the backend server.
 
 ## Tech Stack
 
@@ -32,6 +33,7 @@ To understand architecture concepts relevant to industrial edge software, specif
 - **Framework**: React (Vite)
 - **Language**: TypeScript
 - **Styling**: Vanilla CSS (clean and minimal)
+- **Desktop Wrapper**: Electron
 
 ## Architecture
 
@@ -74,9 +76,27 @@ npm run dev
 ```
 The UI will be available at `http://localhost:5173`.
 
-### 3. Running the Plugin Simulator
+### 3. Desktop Application (Electron)
 
-With the backend running:
+**Development Mode**:
+Run both the React frontend and Python backend (from source) in a single command:
+```bash
+cd frontend
+npm run electron:dev
+```
+
+**Build Standalone Executable**:
+Package the application into a standalone Windows executable. This bundles the Python backend using PyInstaller, so the user doesn't need Python installed.
+```bash
+cd frontend
+npm run electron:build
+```
+The output executable will be located at:
+`frontend/release/win-unpacked/Local CAM Recommender.exe`
+
+### 4. Running the Plugin Simulator
+
+With the backend (or Electron app) running:
 
 ```bash
 cd backend
